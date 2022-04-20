@@ -316,3 +316,158 @@ mod advanced_generics {
         }
     }
 }
+
+mod conversions {
+    use std::fs::File;
+    pub use std::path::{Path, PathBuf};
+
+    fn open_file<P: AsRef<Path>>(p: &P) {
+        let path = p.as_ref();
+        let _file = File::open(path);
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+
+        #[test]
+        fn test_as_ref() {
+            open_file(&"foobar");
+            let path_buf = PathBuf::from("quuxfoo");
+            open_file(&path_buf);
+        }
+    }
+}
+
+mod closures {
+    fn call_with_one<F>(closure: F)
+    where
+        F: Fn(i32) -> i32,
+    {
+        closure(1);
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+
+        #[test]
+        fn test_basic_closure() {
+            let nums = (1..=10).collect::<Vec<i32>>();
+            println!(
+                "Sum of squares {:?} = {}",
+                nums,
+                nums.iter().map(|&e| e * e).sum::<i32>()
+            );
+
+            let cuber = |x| x * x * x;
+            println!(
+                "The sum of the cubes of {:?} is {}",
+                nums,
+                nums.iter().map(|&e| cuber(e)).sum::<i32>()
+            );
+        }
+
+        #[test]
+        fn test_call_with_one() {
+            let num = 100;
+            call_with_one(|x| x + num);
+            call_with_one(|x| x + num);
+        }
+    }
+}
+
+mod imports_modules_and_visibiity {
+    use std::{
+        fs::File,
+        io::{self, prelude::*},
+    };
+
+    fn print_bytes() -> Result<(), io::Error> {
+        let mut f = File::open("src/advanced.rs")?;
+        let mut buffer = [0; 1024];
+
+        f.read(&mut buffer)?;
+        println!("bytes = {:?}", buffer);
+
+        Ok(())
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+
+        #[test]
+        fn test_print_bytes() {
+            let _ = print_bytes();
+        }
+    }
+}
+
+mod lifetimes {
+    use std::str::Split;
+
+    struct Tokenizer<'input> {
+        input: Split<'input, char>,
+    }
+
+    impl<'input> Tokenizer<'input> {
+        fn next_token(&mut self) -> Option<&'input str> {
+            self.input.next()
+        }
+    }
+
+    struct Parser<'tokenizer, 'input: 'tokenizer> {
+        tokenizer: &'tokenizer mut Tokenizer<'input>,
+    }
+
+    impl<'tokenizer, 'input> Parser<'tokenizer, 'input> {
+        fn next_item(&mut self) -> Option<&'input str> {
+            self.tokenizer.next_token()
+        }
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+
+        #[test]
+        fn test_parser() {
+            let mut tokenizer = Tokenizer {
+                input: "( + 1 2 )".split(' '),
+            };
+            let mut parser = Parser {
+                tokenizer: &mut tokenizer,
+            };
+
+            while let Some(item) = parser.next_item() {
+                println!("{:?}", item);
+            }
+        }
+    }
+}
+
+mod send_sync {
+    #[cfg(test)]
+    mod tests {
+        #[test]
+        fn test_send() {
+            use std::thread;
+
+            // automatically implements Send by default
+            #[derive(Debug)]
+            struct Thing;
+
+            // with this uncommented, the test
+            // would not compile
+            //impl !Send for Thing {}
+
+            let thing = Thing;
+            thread::spawn(move || {
+                println!("{:?}", thing);
+            })
+            .join()
+            .unwrap();
+        }
+    }
+}
