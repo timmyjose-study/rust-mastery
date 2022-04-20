@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 //! Rust Basics
 
 mod basic_tyoes {
