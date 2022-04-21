@@ -1,3 +1,8 @@
 [workspace]
 
-members = ["ferrous-systems-workshop", "lists"]
+members = [
+        "ferrous-systems-workshop",
+        "lists",
+        "calling-rust-from-c",
+        "calling-c-from-rust"
+        ]
