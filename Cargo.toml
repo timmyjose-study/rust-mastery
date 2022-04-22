@@ -2,8 +2,6 @@
 
 members = [
         "ferrous-systems-workshop",
-        "lists",
         "calling-rust-from-c",
         "calling-c-from-rust",
-        "rust-design-patterns"
         ]
