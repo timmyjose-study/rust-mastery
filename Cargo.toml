@@ -4,4 +4,5 @@ members = [
         "ferrous-systems-workshop",
         "calling-rust-from-c",
         "calling-c-from-rust",
+        "interior-mutability"
         ]

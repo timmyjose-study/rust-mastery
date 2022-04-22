@@ -283,6 +283,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "interior-mutability"
+version = "0.1.0"
+
+[[package]]
 name = "js-sys"
 version = "0.3.57"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -392,10 +396,6 @@ checksum = "a1feb54ed693b93a84e14094943b84b7c4eae204c512b7ccb95ab0c66d278ad1"
 dependencies = [
  "proc-macro2",
 ]
-
-[[package]]
-name = "rust-design-patterns"
-version = "0.1.0"
 
 [[package]]
 name = "slab"
