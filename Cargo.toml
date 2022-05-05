@@ -4,5 +4,10 @@ members = [
         "ferrous-systems-workshop",
         "calling-rust-from-c",
         "calling-c-from-rust",
-        "interior-mutability"
+        "interior-mutability",
+        "hello_macro",
+        "hello_macro_derive",
+        "macros",
+        "single_command",
+        "too-many-linked-lists",
         ]

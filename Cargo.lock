@@ -265,6 +265,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "hello_macro"
+version = "0.1.0"
+
+[[package]]
+name = "hello_macro_derive"
+version = "0.1.0"
+dependencies = [
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "hermit-abi"
 version = "0.1.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -324,6 +336,15 @@ checksum = "6389c490849ff5bc16be905ae24bc913a9c8892e19b2341dbc175e14c341c2b8"
 dependencies = [
  "cfg-if",
  "value-bag",
+]
+
+[[package]]
+name = "macros"
+version = "0.1.0"
+dependencies = [
+ "hello_macro",
+ "hello_macro_derive",
+ "single_command",
 ]
 
 [[package]]
@@ -398,6 +419,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "single_command"
+version = "0.1.0"
+dependencies = [
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "slab"
 version = "0.4.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -423,6 +452,10 @@ dependencies = [
  "quote",
  "unicode-xid",
 ]
+
+[[package]]
+name = "too-many-linked-lists"
+version = "0.1.0"
 
 [[package]]
 name = "unicode-xid"
